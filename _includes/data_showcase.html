@@ -1,0 +1,106 @@
+<div id="elemet-search-wrapper">
+    <input id="elemet-search" type="text" placeholder="Search keyword/element..."/>
+</div>
+
+<div id="data-showcase-wrapper">
+    {% for topic in site.data.data %}
+        {% if topic[0] != "define" %}
+            <div id="topic">
+                <h2 id="topic_heading">{{topic[0]}}</h2>
+                {% for topic_data in topic[1] %}
+                    {% if topic_data.description.size == 0 %}
+                        {% assign no-arrow = "list-style: none; pointer-events: none;" %}
+                    {% else %}
+                        {% assign asd = "" %}
+                    {% endif %}
+
+                    <details open search_terms='{{ topic_data.search_terms | append:"" }}'>
+                        <summary style='{{ no-arrow }}'><h4 id="topic_heading">{{topic_data.title | markdownify}}</h4></summary>
+                        <p>
+                            {{topic_data.description | markdownify}}
+                        </p>
+                    </details>
+                {% endfor %}
+                <br/>
+            </div>
+            
+        {% endif %}
+    {% endfor %}
+    <p id="search-message" style="display: none;">No matches...</p>
+</div>
+
+<script>
+ function filter(query) {
+    //hide sections (and topics) according to the search query
+    var query = query.toLowerCase().trim();
+    var noResults = true;
+    document.querySelectorAll('#data-showcase-wrapper details').forEach(function (section) {
+        var show = true;
+        var search_terms = JSON.parse(section.getAttribute("search_terms") || "[]").flat(Infinity);
+        if (query && !search_terms.some(search_term => search_term.startsWith(query))) {
+            show = false;
+        }
+        if (show) {
+            section.className = "";
+            noResults = false;
+        } else {
+            section.className = "hidden";
+        }
+        //hide the topic if all the sections are hidden
+        document.querySelectorAll('#topic').forEach(topic => {if(topic.querySelectorAll('.hidden').length == topic.querySelectorAll('details').length){topic.className = "hidden"}else{topic.className = ""}})
+    });
+
+    // update the search message visibility
+    var searchMessage = document.getElementById('search-message');
+    searchMessage.style.display = noResults ? '' : 'none';
+ }
+
+ function applyFilter() {
+     // filter on load according to the URL
+     var searchBox = document.getElementById('elemet-search');
+     var query = decodeURIComponent(location.hash.slice(1));
+     filter(query);
+     if (query) {
+         searchBox.value = query;
+     }
+ }
+
+ function setup() {
+     var searchBox = document.getElementById('elemet-search');
+
+     // ensure height during filtering
+     var binTableWrapper = document.getElementById('data-showcase-wrapper');
+     binTableWrapper.style.height = binTableWrapper.clientHeight + 'px';
+
+     // handle user input
+     searchBox.addEventListener('input', function () {
+         var query = searchBox.value;
+         history.replaceState(null, null, encodeURI('#' + query));
+         applyFilter();
+     });
+
+     // handle shortcuts
+     addEventListener('keydown', function (event) {
+         // focus search box on valid keydown
+         if (event.key.toLowerCase().match(/^[+a-z]$/) &&
+             !(event.ctrlKey || event.altKey || event.metaKey)) {
+             searchBox.focus();
+             searchBox.parentElement.scrollIntoView();
+         }
+         // clear filter on escape
+         else if (event.key === 'Escape') {
+             location.hash = searchBox.value = '';
+             searchBox.focus();
+             searchBox.parentElement.scrollIntoView();
+         }
+     });
+
+     // handle URL changes
+     window.onhashchange = applyFilter;
+
+     // trigger filter on page load
+     applyFilter();
+ }
+
+ setup();
+</script>

