@@ -218,7 +218,7 @@ MATHML namespace:
       - integration point
     description: |
       * `mi`, `mo`, `mn`, `ms`, and `mtext` elements
-  - title: "[annotation-xml](https://www.w3.org/Math/draft-spec/chapter5.html#mixing.elements.annotation.xml) element"
+  - title: "[annotation-xml](https://w3c.github.io/mathml/spec.html#mixing_elements_annotation_xml) element"
     search_terms:
       - encoding
       - annotation-xml
