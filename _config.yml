@@ -1,0 +1,12 @@
+title: mXSS cheatsheet
+baseurl: /mxss-cheatsheet
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - _site
+
+permalink: pretty
