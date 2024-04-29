@@ -56,7 +56,7 @@ define: &content_breakers_searchterms
   - var
 
 HTML namespace:
-  - title: "[Select](https://html.spec.whatwg.org/#parsing-main-inselect)"
+  - title: "[select](https://html.spec.whatwg.org/#the-select-element)"
     search_terms:
       - select
       - input
@@ -66,7 +66,7 @@ HTML namespace:
     description: |
       * Unwanted elements in select will get deleted, `<select><a>` → `<select>`
       * Aside from `<select>`, `<input>`, `<keygen>` and `<textarea>`: `<select><style><input><a>` → `<select></select><input><a></a>`
-  - title: "[Form](https://html.spec.whatwg.org/#the-form-element)"
+  - title: "[form](https://html.spec.whatwg.org/#the-form-element)"
     search_terms:
       - nested
       - form
@@ -74,7 +74,7 @@ HTML namespace:
       * Cant have other form descendants, `<form id=form1>INSIDE_FORM1<form id=form2>INSIDE_FORM2` → `<form id="form1">INSIDE_FORM1 INSIDE_FORM2</form>`
       * Bypass, `<form id="outer"><div></form><form id="inner"><input>` →  `<form id="outer"><div><form id="inner"><input></form></div></form>` → `<form id="outer"><div><input></div></form>`
       * Can craft payloads that will mutate even after the second reparsing: `<form id="outer"><math><mtext></form><form id="inner"><mglyph><svg><mtext><form id="outer"><mi></form><form id="inner"><mglyph><desc><xmp><img src=x onerror=alert(1)>`
-  - title: "[Table](https://html.spec.whatwg.org/#the-table-element)"
+  - title: "[table](https://html.spec.whatwg.org/#the-table-element)"
     search_terms:
       - table
       - p
@@ -121,7 +121,7 @@ HTML namespace:
       * Js enabled, `<noscript><a>` → `<noscript><a></noscript>`
       * Js disabled, `<noscript><a>` → `<noscript><a></a></noscript>`
 
-  - title: "[br](https://html.spec.whatwg.org/#the-br-element) and[p](https://html.spec.whatwg.org/#the-p-element)"
+  - title: "[br](https://html.spec.whatwg.org/#the-br-element) and [p](https://html.spec.whatwg.org/#the-p-element)"
     search_terms:
       - p
       - br
@@ -156,13 +156,13 @@ HTML namespace:
       * Are the only elements that can be created with an end tag, </p> → <p></p>
       * Elements that end a `p` element: `address`, `article`, `aside`, `blockquote`, `center`, `details`, `dialog`, `dir`, `div`, `dl`, `fieldset`, `figcaption`, `figure`, `footer`, `header`, `hgroup`, `main`, `menu`, `nav`, `ol`, `p`, `search`, `section`, `summary`, `ul`, `pre`, `listing`, `plaintext`
 
-  - title: "[Plaintext](https://html.spec.whatwg.org/#plaintext-state)"
+  - title: "[plaintext](https://html.spec.whatwg.org/#plaintext-state)"
     search_terms:
       - plaintext
     description: |
       * `plaintext` can't be closed in HTML namespace but `<table><plaintext><a>` → `<plaintext><a></plaintext><table></table>` table will execute
   
-  - title: "[Textarea](https://html.spec.whatwg.org/#the-textarea-element)"
+  - title: "[textarea](https://html.spec.whatwg.org/#the-textarea-element)"
     search_terms:
       - textarea
       - encode
@@ -218,7 +218,7 @@ MATHML namespace:
       - integration point
     description: |
       * `mi`, `mo`, `mn`, `ms`, and `mtext` elements
-  - title: "[annotation-xml](https://www.w3.org/Math/draft-spec/chapter5.html#mixing.elements.annotation.xml) element"
+  - title: "[annotation-xml](https://w3c.github.io/mathml/spec.html#mixing_elements_annotation_xml) element"
     search_terms:
       - encoding
       - annotation-xml
