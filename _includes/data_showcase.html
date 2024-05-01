@@ -9,7 +9,7 @@
                 <h2 id="topic_heading">{{topic[0]}}</h2>
                 {% for topic_data in topic[1] %}
                     {% if topic_data.description.size == 0 %}
-                        {% assign no-arrow = "list-style: none; pointer-events: none;" %}
+                        {% assign no-arrow = "list-style: none;" %}
                     {% else %}
                         {% assign asd = "" %}
                     {% endif %}
