@@ -171,6 +171,27 @@ HTML namespace:
       * Content will get decoded
       * Comments will not be parsed in textarea: `<textarea><!-- test ->` → `<textarea> &lt;!--test--&gt;</textarea>`
   
+  - title: "[Active formatting elements](https://html.spec.whatwg.org/multipage/parsing.html#formatting)"
+    search_terms:
+      - a
+      - b
+      - big
+      - code
+      - em
+      - font 
+      - i
+      - nobr
+      - s
+      - small
+      - strike
+      - strong
+      - tt
+      - u
+    description: |
+      * List of elements: `a`, `b`, `big`, `code`, `em`, `font`, `i`, `nobr`, `s`, `small`, `strike`, `strong`, `tt`, and `u`
+      * Active formatting elements might get duplicated during parsing roundtrips when the DOM tree changes - [the-list-of-active-formatting-elements](https://html.spec.whatwg.org/multipage/parsing.html#the-list-of-active-formatting-elements)
+      * For example: `<li><a><table><li>t` → `<li><a><li>t</li><table></table></a></li>` → `<li><a></a></li><li><a>t</a></li><table></table>`
+  
   - title: "NULL byte"
     search_terms:
      - null byte
