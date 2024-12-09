@@ -153,7 +153,7 @@ HTML namespace:
       - listing
       - plaintext
     description: |
-      * Are the only elements that can be created with an end tag, </p> → <p></p>
+      * Are the only elements that can be created with an end tag, `</p>` → `<p></p>`
       * Elements that end a `p` element: `address`, `article`, `aside`, `blockquote`, `center`, `details`, `dialog`, `dir`, `div`, `dl`, `fieldset`, `figcaption`, `figure`, `footer`, `header`, `hgroup`, `main`, `menu`, `nav`, `ol`, `p`, `search`, `section`, `summary`, `ul`, `pre`, `listing`, `plaintext`
 
   - title: "[plaintext](https://html.spec.whatwg.org/#plaintext-state)"
@@ -204,6 +204,20 @@ HTML namespace:
       a=new window.DOMParser().parseFromString(`<a\x00 id="test">`,"text/html");
       a.querySelector(`#test`).tagName.substr(1).charCodeAt() == 65533;
       >>> true
+      ```
+  - title: "[is](https://html.spec.whatwg.org/#attr-is) attribute"
+    search_terms:
+     - is
+     - attribute
+    description: |
+      *  The *is* attribute does not get deleted when [serializing](https://html.spec.whatwg.org/#serialising-html-fragments)
+      ```
+      a=new DOMParser().parseFromString('<a is="to-delete">', "text/html");
+      a.body.firstChild.removeAttribute("is");
+      a.getRootNode().body.firstChild;
+      >>> <a>​</a>​
+      a.getRootNode().body.firstChild.outerHTML;
+      >>> '<a is="to-delete"></a>'
       ```
 
 
