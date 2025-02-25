@@ -227,7 +227,7 @@ HTML namespace:
      - <?
      - </
     description: |
-      *  When a comment is [incorrectly-opened](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-incorrectly-opened-comment) (`<!`, `</`, `<?`, `<!-`) the first following occurance of greater than `>` will close the comment:
+      *  When a comment is [incorrectly-opened](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-incorrectly-opened-comment) (`<!`, `</`, `<?`, `<!-`) the first following occurrence of greater than `>` will close the comment:
       ```
       <! comment > outside of comment
       <!-- comment > still in comment -->
