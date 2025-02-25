@@ -219,7 +219,19 @@ HTML namespace:
       a.getRootNode().body.firstChild.outerHTML;
       >>> '<a is="to-delete"></a>'
       ```
-
+  - title: "[comments](https://html.spec.whatwg.org/multipage/syntax.html#comments)"
+    search_terms:
+     - comments
+     - <!--
+     - -->
+     - <?
+     - </
+    description: |
+      *  When a comment is [incorrectly-opened](https://html.spec.whatwg.org/multipage/parsing.html#parse-error-incorrectly-opened-comment) (`<!`, `</`, `<?`, `<!-`) the first following occurrence of greater than `>` will close the comment:
+      ```
+      <! comment > outside of comment
+      <!-- comment > still in comment -->
+      ```
 
 SVG namespace:
   - title: "HTML integration points"
